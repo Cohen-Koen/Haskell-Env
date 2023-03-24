@@ -1,12 +1,18 @@
 module Main where
 
-x = [1..1000]
-y = [1/x^z | x <- [1..1000]]
-z = 2
+factorial :: Int -> Int
+factorial x = if x == 0 then 1 else x*factorial (x-1)
+
+
+
+askFact = do
+    putStrLn "n! where n =:"
+    n <- getLine
+    let n' = read n :: Int -- this line fixes the whole thing...
+    putStrLn (show (factorial n'))   
+
+
 
 main :: IO ()
 main = do
-    --   putStrLn "Hello, Haskell!"
-    print x
-    print "-------------------------------------------"
-    print y
+    askFact

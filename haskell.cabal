@@ -35,13 +35,13 @@ license:            GPL-3.0-or-later
 license-file:       LICENSE
 
 -- The package author(s).
--- author:
+author: Cohen, Delta-Eight-Zeta
 
 -- An email address to which users can send suggestions, bug reports, and patches.
 -- maintainer:
 
 -- A copyright notice.
--- copyright:
+-- copyright: N/A
 category:           Testing
 build-type:         Simple
 
