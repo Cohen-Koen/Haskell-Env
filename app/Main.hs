@@ -40,6 +40,7 @@ statsOfNumber = do
     enterRtn
 
 firstTenMultiples :: Int -> [Int]
+firstTenMultiples 0 = return 0
 firstTenMultiples x = [x, x*2..x*10]
 
 
