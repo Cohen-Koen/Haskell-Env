@@ -8,7 +8,7 @@ clear = putStr "\ESC[2J"
 
 mmap :: (a -> b) -> [a] -> [b]
 mmap _ [] = []
-mmap f (x:xs) = f x : map f xs
+mmap f (x:xs) = f x : mmap f xs
 
 
 
@@ -28,7 +28,7 @@ listStats :: IO ()
 listStats = do
     putStrLn "Enter a list of integers separated by spaces:"
     input <- getLine
-    let my_list = map read (words input) :: [Int]
+    let my_list = mmap read (words input) :: [Int]
     let total = sum my_list
     putStrLn $ "Sum: " ++ show total
     let average = fromIntegral total / fromIntegral (length my_list)
@@ -37,8 +37,10 @@ listStats = do
     let min_val = minimum my_list
     putStrLn $ "Maximum: " ++ show max_val
     putStrLn $ "Minimum: " ++ show min_val
-    let squares = map (^2) my_list
+    let squares = mmap (^2) my_list
     putStrLn $ "Squares: " ++ show squares
+    let cubes = mmap (^3) my_list
+    putStrLn $ "Cubes: " ++ show cubes
     enterRtn
 
 enterRtn :: IO ()
@@ -173,7 +175,7 @@ usefulConstants = do
     else putStrLn "Invalid input"
     
 
-modes = [statsOfNumber, usefulConstants, specificFunctionsMenu, programInfo, clear ]
+modes = [statsOfNumber,listStats,usefulConstants,specificFunctionsMenu,programInfo,exit] -- Function space
 
 menu :: IO ()
 menu = do           -- DO is a monad, which is looping through 
@@ -181,26 +183,23 @@ menu = do           -- DO is a monad, which is looping through
     putStrLn "Which Task would you like to run"
     putStrLn "1. Stats of a number"
     putStrLn "2. Stats of list"
-    putStrLn "2. Useful Constants"
+    putStrLn "3. Useful Constants"
     putStrLn "4. Specific Functions"
     putStrLn "5. Program Info"
     putStrLn "6. Exit"
     n <- getLine
     let n' = read n :: Int
     clear
-    if n' == 1 then statsOfNumber
-    else if n' == 2 then listStats
-    else if n' == 3 then usefulConstants
-    else if n' == 4 then specificFunctionsMenu
-    else if n' == 5 then programInfo
-    else if n' == 6 then do
-        clear
-        exitWith (ExitSuccess)
+    if n' >= 1 && n'  <= 6 then
+        modes !! (n'-1)
     else putStrLn "Invalid input"
     menu
 
 
-
+exit :: IO ()
+exit = do 
+    clear
+    exitWith (ExitSuccess)
 
 
 
